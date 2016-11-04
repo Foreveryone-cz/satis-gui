@@ -81,6 +81,12 @@ class PackagesPresenter extends SecuredPresenter
 		$this->redirect('this');
 	}
 
+    public function handleCompile()
+    {
+        $this->packageManager->compileConfig();
+        $this->flashMessage('Config compiled sucessfull', 'succes');
+        $this->redirect('this');
+    }
 
 	public function handleBuild()
 	{
