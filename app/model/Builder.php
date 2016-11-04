@@ -37,6 +37,7 @@ class Builder
 		$command = sprintf('php %s build %s %s %s', escapeshellarg($this->binFile), escapeshellarg($this->configFile), escapeshellarg($this->outputDir), $packageList);
 
 		$process = new Process($command);
+        $process->setTimeout(3600);
 		$process->run($callback);
 
 		return $process->getOutput();
