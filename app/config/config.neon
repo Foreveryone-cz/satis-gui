@@ -12,7 +12,7 @@ parameters:
 	configFile: %appDir%/../data/satis.json
 	outputDir: %appDir%/../data/output
 
-	secretkey: secretekey
+	secretKey: secretekey
 
 	satis:
 		name: A Composer Repository
@@ -21,8 +21,12 @@ parameters:
 		require-dependencies: TRUE
 		require-dev-dependencies: TRUE
 		archive:
-			directory: files/%secretkey%
+			directory: dist
 			format: zip
+
+	satis-compiler:
+		configFile: %configFile%
+		homepageSuffix: files/%secretKey%
 
 	webhook:
 		password: webhookpassword
@@ -52,7 +56,7 @@ services:
 	router: @App\RouterFactory::createRouter
 
 	- App\Model\UserManager
-	- App\Model\PackageManager(%configFile%, %satis%)
+	- App\Model\PackageManager(%satis-compiler%, %satis%)
 
 	- App\Model\Builder(%configFile%, %outputDir%, %appDir%/../vendor/composer/satis/bin/satis)
 

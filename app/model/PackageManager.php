@@ -15,12 +15,10 @@ use Nette\Utils\Json;
 class PackageManager
 {
 
-	const TABLE_NAME = 'packages';
+    const TABLE_NAME = 'packages';
 
-
-
-	/** @var string */
-	private $configFile;
+    /** @var string */
+    private $params;
 
 	/** @var array */
 	private $parameters;
@@ -31,14 +29,28 @@ class PackageManager
 	/** @var Request */
 	private $httpRequest;
 
+    /** @var string */
+	private $configFile;
 
+    /** @var string */
+    private $homepageSuffix;
 
-	function __construct($configFile, $parameters, Context $db, Request $httpRequest)
+	public function __construct($params, $parameters, Context $db, Request $httpRequest)
 	{
-		$this->configFile = $configFile;
+		$this->params = $params;
 		$this->parameters = $parameters;
 		$this->db = $db;
 		$this->httpRequest = $httpRequest;
+
+        if(empty($params['configFile'])) {
+            throw new \Exception('Parameter configFile missing.');
+        }
+
+        $this->configFile = $params['configFile'];
+
+        if(isset($params['homepageSuffix'])) {
+            $this->homepageSuffix = $params['homepageSuffix'];
+        }
 	}
 
 
@@ -68,6 +80,10 @@ class PackageManager
 		$repositories = $this->getAll();
 
 		$domain = $this->httpRequest->getUrl()->getHostUrl();
+
+        if($this->homepageSuffix) {
+            $domain .= '/' . $this->homepageSuffix;
+        }
 
 		$config = [
 			'homepage' => $domain,
