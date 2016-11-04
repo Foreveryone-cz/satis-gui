@@ -10,7 +10,10 @@ php:
 
 parameters:
 	configFile: %appDir%/../data/satis.json
-	outputDir: %appDir%/../www
+	outputDir: %appDir%/../data/output
+
+	secretkey: secretekey
+
 	satis:
 		name: A Composer Repository
 		#homepage: %domain%
@@ -18,7 +21,7 @@ parameters:
 		require-dependencies: TRUE
 		require-dev-dependencies: TRUE
 		archive:
-			directory: %outputDir%/dist
+			directory: files/%secretkey%
 			format: zip
 
 	webhook:

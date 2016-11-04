@@ -1,4 +1,5 @@
-*
-!.gitignore
-!.htaccess
-!web.config
+satis.json
+output/*
+!output/.gitkeep
+output/files/*
+!output/files/.gitkeep
