@@ -16,7 +16,7 @@ class FilesPresenter extends BasePresenter
             $outputDir  = realpath($this->context->parameters['outputDir']);
             $file       = realpath($outputDir . '/' . $file);
 
-            if($file && strpos($file, $outputDir) === 0) {
+            if($file && strpos($file, $outputDir) === 0 && file_exists($file)) {
                 echo file_get_contents($file);
                 $this->terminate();
             }
