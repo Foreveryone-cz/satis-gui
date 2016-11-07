@@ -17,11 +17,12 @@ class FilesPresenter extends BasePresenter
             $file       = realpath($outputDir . '/' . $file);
 
             if($file && strpos($file, $outputDir) === 0 && file_exists($file)) {
-                echo file_get_contents($file);
-                $this->terminate();
+                $response = new \Nette\Application\Responses\FileResponse($file);
+                $this->sendResponse($response);
             }
         }
 
+        /* @var $httpResponse \Nette\Http\Response */
         $httpResponse = $this->context->getByType('Nette\Http\Response');
         $httpResponse->setCode(\Nette\Http\Response::S403_FORBIDDEN);
         $this->terminate();

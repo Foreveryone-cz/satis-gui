@@ -20,8 +20,8 @@ class RouterFactory
 	public function createRouter()
 	{
 		$router = new RouteList();
-        $router[] = new Route('/files/<key>/<file .*>', 'Files:download');
-		$router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
+        $router[] = new Route('/files/<key>/<file .*>', 'Files:download', Route::SECURED);
+		$router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default', Route::SECURED);
 		return $router;
 	}
 

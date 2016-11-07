@@ -4,5 +4,7 @@
 	Webhook url: {link //webhook: password => $webhookPassword}
 </div>
 
-<iframe src="{$basePath}/index.html" id="homepage" scrolling="no" n:if="file_exists($wwwDir.'/index.html')"></iframe>
+<div>
+    {$output|noescape}
+</div>
 {/block}
