@@ -33,7 +33,7 @@ class PackageManager
 	private $configFile;
 
     /** @var string */
-    private $homepageSuffix;
+    private $url;
 
 	public function __construct($params, $parameters, Context $db, Request $httpRequest)
 	{
@@ -48,8 +48,8 @@ class PackageManager
 
         $this->configFile = $params['configFile'];
 
-        if(isset($params['homepageSuffix'])) {
-            $this->homepageSuffix = $params['homepageSuffix'];
+        if(isset($params['url'])) {
+            $this->url = $params['url'];
         }
 	}
 
@@ -79,14 +79,8 @@ class PackageManager
 	{
 		$repositories = $this->getAll();
 
-		$domain = $this->httpRequest->getUrl()->getHostUrl();
-
-        if($this->homepageSuffix) {
-            $domain .= '/' . $this->homepageSuffix;
-        }
-
 		$config = [
-			'homepage' => $domain,
+			'homepage' => $this->url,
 			'repositories' => [
 			]
 		];

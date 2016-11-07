@@ -26,7 +26,7 @@ parameters:
 
 	satis-compiler:
 		configFile: %configFile%
-		homepageSuffix: files/%secretKey%
+		url: https://mydomain.com/files/%secretKey%
 
 	webhook:
 		password: webhookpassword
