@@ -36,7 +36,7 @@ class Install extends Command
 	protected function configure()
 	{
 		$this->setName('app:install')
-				->setDescription('install');
+				->setDescription('install (deprecated)');
 	}
 
 

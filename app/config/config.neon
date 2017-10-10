@@ -41,7 +41,7 @@ nette:
 		expiration: 14 days
 
 	database:
-		dsn: sqlite:%appDir%/../db/db.sqlite
+		dsn:
 		user:
 		password:
 		options:
@@ -63,3 +63,9 @@ services:
 	- {class: Console\Commands\CreateUser, tags: [kdyby.console.command]}
 	- {class: Console\Commands\Install, tags: [kdyby.console.command]}
 	- {class: Console\Commands\Build, tags: [kdyby.console.command]}
+	- {class: Console\Commands\Schema\Create, tags: [kdyby.console.command]}
+
+# Tables
+	- Table\UsersTable
+	- Table\PackagesTable
+

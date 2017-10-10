@@ -6,3 +6,4 @@ vendor
 config.local.neon
 nbproject
 debug
+.idea
