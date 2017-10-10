@@ -19,7 +19,8 @@ class PackagesTable extends Table
         parent::__construct('packages');
         $this->createId();
         $this->createColumn('type', Type::varcharType(255));
-        $this->createColumn('url', Type::varcharType(255));
+        $this->createColumn('url', Type::varcharType(255))->unique();
+        $this->createColumn('group', Type::varcharType(255));
     }
 
 }

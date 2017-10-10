@@ -37,6 +37,7 @@ class PackagesPresenter extends SecuredPresenter
 
 		$form->addText('type', 'Type')->setDefaultValue('vcs')->setRequired();
 		$form->addText('url', 'Url')->setRequired();
+		$form->addText('group', 'Group')->setDefaultValue('common');
 
 		$form->addSubmit('btnSubmit', 'Add');
 
@@ -51,8 +52,25 @@ class PackagesPresenter extends SecuredPresenter
 		$values = $form->getValues();
 
 		try {
-			$this->packageManager->add($values->type, $values->url);
-			//$this->packageManager->compileConfig();
+		    $type   = $values->type;
+		    $group  = $values->group;
+		    $urls   = preg_split('~\s+~', $values->url);
+
+		    foreach($urls as $url) {
+		        $link = trim($url);
+		        if($link) {
+		            $record = $this->packageManager->findByUrl($link);
+		            if($record) {
+		                $this->packageManager->update($record->id, [
+		                    'group' => $group,
+                        ]);
+                    } else {
+                        $this->packageManager->add($type, $link, $group);
+                    }
+
+                }
+            }
+
 			$this->flashMessage('Package added.', 'success');
 		} catch (PDOException $e) {
 			if ($e->getCode() === '23000') {
@@ -80,24 +98,5 @@ class PackagesPresenter extends SecuredPresenter
 		$this->flashMessage('Package deleted.', 'success');
 		$this->redirect('this');
 	}
-
-    public function handleCompile()
-    {
-        $this->packageManager->compileConfig();
-        $this->flashMessage('Config compiled sucessfull', 'succes');
-        $this->redirect('this');
-    }
-
-	public function handleBuild()
-	{
-		try {
-			$this->builder->build();
-			$this->flashMessage('Packages json built.', 'success');
-		} catch (RuntimeException $e) {
-			$this->flashMessage('There was an error building packages.json: ' . $e->getMessage(), 'danger');
-		}
-		$this->redirect('this');
-	}
-
 
 }

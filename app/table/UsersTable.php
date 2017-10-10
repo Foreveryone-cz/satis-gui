@@ -22,7 +22,7 @@ class UsersTable extends Table
         parent::__construct('users');
 
         $this->createId();
-        $this->createColumn('username', Type::varcharType(255));
+        $this->createColumn('username', Type::varcharType(255))->unique();
         $this->createColumn('password', Type::varcharType(255));
     }
 

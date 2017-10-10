@@ -54,20 +54,30 @@ class PackageManager
 	}
 
 
-	public function add($type, $url)
+	public function add($type, $url, $group)
 	{
 		$this->db->table(self::TABLE_NAME)->insert([
 			'type' => $type,
-			'url' => $url
+			'url' => $url,
+            'group' => $group,
 		]);
 	}
 
 
 	public function getAll()
 	{
-		return $this->db->table(self::TABLE_NAME);
+		return $this->db->table(self::TABLE_NAME)->order('group ASC');
 	}
 
+	public function findByUrl($url)
+    {
+        return $this->db->table(self::TABLE_NAME)->where(['url' => $url])->fetch();
+    }
+
+    public function update($id, Array $data)
+    {
+        return $this->db->table(self::TABLE_NAME)->where(['id' => $id])->update($data);
+    }
 
 	public function delete($id)
 	{
