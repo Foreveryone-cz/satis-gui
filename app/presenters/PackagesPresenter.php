@@ -52,7 +52,7 @@ class PackagesPresenter extends SecuredPresenter
 
 		try {
 			$this->packageManager->add($values->type, $values->url);
-			$this->packageManager->compileConfig();
+			//$this->packageManager->compileConfig();
 			$this->flashMessage('Package added.', 'success');
 		} catch (PDOException $e) {
 			if ($e->getCode() === '23000') {
